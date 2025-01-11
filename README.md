@@ -1,5 +1,91 @@
-# Vue 3 + TypeScript + Vite
+# Vue Application
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This is a Vue 3 application that allows users to create and manage trades. The application also lists brokers and assets associated with a user. However, before creating a trade, certain prerequisites must be fulfilled.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Prerequisites
+
+- Ensure you have **Node.js** (v16 or higher) installed.
+- Install **npm** or **yarn** for dependency management.
+
+## Getting Started
+
+1. **Clone the Repository:**
+
+   ```bash
+   git clone <repository-url>
+   cd <repository-folder>
+   ```
+
+2. **Install Dependencies:**
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Run the Development Server:**
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+   The application will be available at `http://localhost:5173`.
+
+   ```
+
+## Registration Flow
+
+The application includes a user registration flow with the following features:
+
+1. **Email Validation:**
+   - Upon entering an email, the application checks if the email is already associated with an existing user.
+
+2. **Account Verification:**
+   - After registration, a verification code is sent to the user's email.
+   - The user must enter this code to activate their account.
+
+## Creating a Trade
+
+Before you can create a trade, you need to ensure the following:
+
+1. **Assets:**
+
+   - Assets need to be assigned to a user.
+   - The application currently lists assets, but there is no endpoint available to create assets for a user.
+
+2. **Brokers:**
+
+   - Brokers are listed and can be created.
+   - Use the "Add Broker" functionality in the app to create a broker if none are available.
+
+3. **Trade Creation:**
+
+   - Once assets and brokers are set up, you can create trades by providing the necessary details like side (BUY/SELL), mood, prices, and associated asset and broker IDs.
+   - Ensure the details are valid to avoid validation errors.
+
+## Notes
+
+- Assets and brokers are prerequisites for creating trades.
+- While the app is capable of listing and creating brokers, the lack of an endpoint to create assets limits some functionalities.
+- For now, ensure assets are pre-assigned to the user through another system or existing logic.
+
+## Troubleshooting
+
+If you encounter any issues:
+
+- Ensure your backend API is running and accessible.
+- Verify that the API endpoints for brokers and trades are properly configured.
+- Check the browser console for any errors.
+
+## Features Overview
+
+- **Registration:** Includes email validation and account verification via a code.
+- **Brokers:** List, create, and manage brokers.
+- **Assets:** View assets associated with a user.
+- **Trades:** Create and manage trades with validations.
+
+For further assistance, feel free to reach out or refer to the codebase for additional context.
+

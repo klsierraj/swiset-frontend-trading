@@ -6,7 +6,7 @@ const routes = [
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: () => import('../views/DashboardView.vue'), // Componente principal con Sidebar y router-view
+    component: () => import('../views/DashboardView.vue'), 
     meta: { requiresAuth: true },
     children: [
       {

@@ -17,7 +17,7 @@ const sendActivationCodeUseCase = new SendActivationCodeUseCase(userRepository);
 const validateActivationCodeUseCase = new ValidateActivationCodeUseCase(userRepository);
 
 export const useRegistrationStore = defineStore('registration', () => {
-  // Función para obtener el estado inicial limpio
+
   const getInitialState = () => ({
     firstName: '',
     lastName: '',
@@ -27,10 +27,9 @@ export const useRegistrationStore = defineStore('registration', () => {
     activationCode: '',
   });
 
-  // Verificar si hay una sesión de registro activa
+
   const hasActiveRegistration = localStorage.getItem('hasActiveRegistration') === 'true';
 
-  // Estado del formulario con persistencia solo si hay una sesión activa
   const formData = ref(
     hasActiveRegistration 
       ? JSON.parse(localStorage.getItem('formData') || JSON.stringify(getInitialState()))
@@ -92,7 +91,6 @@ export const useRegistrationStore = defineStore('registration', () => {
     }, 1000);
   };
 
-  // Avanzar al siguiente paso
   const goToNextStep = () => {
     if (currentStep.value < 3) {
       currentStep.value++;
@@ -100,7 +98,6 @@ export const useRegistrationStore = defineStore('registration', () => {
     }
   };
 
-  // Retroceder al paso anterior
   const goToPreviousStep = () => {
     if (currentStep.value > 1) {
       currentStep.value--;
@@ -108,13 +105,11 @@ export const useRegistrationStore = defineStore('registration', () => {
     }
   };
 
-  // Actualizar datos del formulario
   const updateFormData = (field: keyof typeof formData.value, value: string) => {
     formData.value[field] = value;
     saveToLocalStorage();
   };
 
-  // Validar email (Primer Paso)
   const validateEmail = async () => {
     try {
       isProcessing.value = true;
@@ -136,7 +131,6 @@ export const useRegistrationStore = defineStore('registration', () => {
     }
   };
 
-  // Validar username y registrar usuario (Segundo Paso)
   const validateAndRegister = async () => {
     try {
       isProcessing.value = true;
@@ -176,7 +170,6 @@ export const useRegistrationStore = defineStore('registration', () => {
     }
   };
 
-  // Enviar código de activación
   const sendActivationCode = async () => {
     if (isProcessing.value || countdown.value > 0) return;
 
@@ -200,7 +193,6 @@ export const useRegistrationStore = defineStore('registration', () => {
     }
   };
 
-  // Validar código de activación
   const validateActivationCode = async (key: string): Promise<boolean> => {
     if (isProcessing.value) return false;
 
@@ -228,7 +220,6 @@ export const useRegistrationStore = defineStore('registration', () => {
     }
   };
 
-  // Limpiar registro
   const clearRegistration = () => {
     console.log('Limpiando el estado del registro...');
     
@@ -248,11 +239,9 @@ export const useRegistrationStore = defineStore('registration', () => {
     localStorage.removeItem('currentStep');
     localStorage.removeItem('countdown');
     localStorage.removeItem('hasActiveRegistration');
-  
-    console.log('Estado del registro limpiado correctamente.');
+
   };
 
-  // Validar paso actual
   const validateCurrentStep = () => {
     if (!hasActiveRegistration && currentStep.value > 1) {
       currentStep.value = 1;
@@ -262,16 +251,15 @@ export const useRegistrationStore = defineStore('registration', () => {
     }
   };
 
-  // Ejecutar validación inicial
+
   validateCurrentStep();
 
-  // Cerrar modal
+
   const closeModal = () => {
     showModal.value = false;
     modalMessage.value = '';
   };
 
-  // Cleanup para cuando se desmonte el store
   const cleanup = () => {
     if (countdownInterval) {
       clearInterval(countdownInterval);

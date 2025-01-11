@@ -13,7 +13,7 @@
         </q-card-section>
       </q-card>
       <div v-for="broker in brokers">
-        <q-card bordered class="tracking-card">
+        <q-card bordered class="broker-card">
           <q-card-section>
             <div class="broker-item"> 
               <span class="broker-label">Broker:</span>
@@ -38,6 +38,19 @@
           </div>
         </q-card-section>
       </q-card>
+      <div v-for="asset in userAssets   ">
+        <q-card bordered class="asset-card">
+          <q-card-section>
+            <div class="broker-item"> 
+              <span class="broker-name">{{ asset.marketName}}</span>
+              <br>
+              <span>{{ asset.name }}</span>
+              <br>
+              <span>{{ asset.ticker }}</span>
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
       </div>
       
       
@@ -46,17 +59,12 @@
     <q-dialog v-model="showBrokerDialog">
       <AddBroker @close="onCloseDialog('broker')" />
     </q-dialog>
-
-    <q-dialog v-model="showAssetDialog">
-      <AddAsset @close="onCloseDialog('asset')" />
-    </q-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import AddBroker from '../components/watchlist/AddBroker.vue';
-import AddAsset from '../components/watchlist/AddAsset.vue';
 import { useProfileStore } from '../../application/stores/useProfileStore';
 import { storeToRefs } from 'pinia';
 
@@ -64,7 +72,7 @@ const showBrokerDialog = ref(false);
 const showAssetDialog = ref(false);
 const profileStore = useProfileStore();
 
-const {brokers} = storeToRefs(profileStore);
+const {brokers, userAssets} = storeToRefs(profileStore);
 
 
 const onOpenDialog = (type: 'broker' | 'asset') => {
@@ -102,6 +110,15 @@ const onCloseDialog = (type: 'broker' | 'asset') => {
   border: 2px dashed #bbb;
   background-color: #1c1c1c;
 }
+.asset-card, .broker-card {
+  max-width: 300px;
+  margin: 1rem 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1c1c1c;
+}
 
 .add-item {
   display: flex;
@@ -114,12 +131,15 @@ const onCloseDialog = (type: 'broker' | 'asset') => {
   color: var(--q-primary);
 }
 .broker-container {
-    display: flex;
-    align-items: center;
-    gap: 3em;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .add-item span {
   margin-top: 0.5rem;
+}
+.assets-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 </style>

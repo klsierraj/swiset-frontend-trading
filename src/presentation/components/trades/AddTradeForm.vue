@@ -209,10 +209,16 @@
 import { ref } from "vue";
 import { Trade } from "../../../domain/entities/Trade";
 import { useTradeStore } from "../../../application/stores/tradeStore";
+import { Notify } from "quasar";
+import { useProfileStore } from "../../../application/stores/useProfileStore";
+import { storeToRefs } from "pinia";
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close",  "tradeAdded"]); 
+const profileStore = useProfileStore()
 
-// Campos del formulario
+const {userInfo} = storeToRefs(profileStore)
+
+
 const asset = ref<number | null>(null);
 const broker = ref<number | null>(null);
 const side = ref<{ value: "BUY" | "SELL"; label: string } | null>(null);
@@ -227,23 +233,20 @@ const grossProfit = ref<string>("");
 const tradeCommission = ref<string>("");
 const sentiment = ref<{ value: string; label: string } | null>(null);
 
-// Opciones
+
 const assetOptions = [
   { value: 529, label: "EURAUD" },
-  { value: 530, label: "EURUSD" },
-  { value: 531, label: "USDJPY" },
 ];
 const brokerOptions = [
   { value: 524858, label: "360 Capital Ltd" },
-  { value: 524859, label: "Broker X" },
 ];
 const sideOptions = [
   { value: "BUY", label: "Buy" },
   { value: "SELL", label: "Sell" },
 ];
 const sentimentOptions = [
-  { value: "HAPPY", label: "Anxious" },
-  { value: "ANXIOUS", label: "Happy" },
+  { value: "HAPPY", label: "Happy" },
+  { value: "ANXIOUS", label: "Anxious" },
   { value: "RELAXED", label: "Relaxed" },
 ];
 
@@ -270,30 +273,31 @@ const submitTrade = async () => {
     }
 
     const trade = new Trade(
-      side.value.value, // Extraemos el valor del objeto
-      sentiment.value?.value || "Neutral", // Extraemos el valor del objeto
+      side.value.value, 
+      sentiment.value.value , 
       formattedOpenTime,
       formattedCloseTime,
       parseFloat(entryPrice.value),
       parseFloat(exitPrice.value),
       parseFloat(stopLoss.value),
       parseFloat(grossProfit.value),
-      0, // pipValue por defecto
+      0, 
       parseFloat(tradeCommission.value),
-      206473, // userId
+      userInfo.value?.id  as number,
       asset.value!,
       broker.value!
     );
 
-    await tradeStore.createTrade(trade, localStorage.getItem("authToken")!);
-    limpiarFormulario();
+    const newTrade = await tradeStore.createTrade(trade, localStorage.getItem("authToken")!);
+    resetForm();
+    emit("tradeAdded", newTrade);
     onCloseDialog();
   } catch (error: any) {
-    console.error("Error al enviar el trade:", error.message || "Error desconocido.");
+    Notify.create({ type: "negative", message: error.message });
   }
 };
 
-const limpiarFormulario = () => {
+const resetForm = () => {
   asset.value = null;
   broker.value = null;
   side.value = null;

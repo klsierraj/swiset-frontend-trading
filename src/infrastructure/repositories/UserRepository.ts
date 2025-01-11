@@ -164,7 +164,6 @@ export class UserRepository implements IUserRepository {
       );
       return response.data;
     } catch (error: any) {
-      console.error("Error en UserRepository.addBroker:", error.message);
       throw new Error("Error al agregar el broker.");
     }
   }

@@ -25,6 +25,9 @@ import {
   QTime,
   QPopupProxy,
   QDate,
+  QTd,
+  QTable,
+  QBadge,
 } from "quasar";
 import "quasar/dist/quasar.css";
 import "./style.css";
@@ -54,9 +57,12 @@ app.use(Quasar, {
     QSelect,
     QTime,
     QPopupProxy,
-    QDate
+    QDate,
+    QTd,
+    QTable,
+    QBadge,
   },
-  plugin: { Notify },
+  plugins: { Notify },
 });
 app.use(pinia);
 app.use(router);

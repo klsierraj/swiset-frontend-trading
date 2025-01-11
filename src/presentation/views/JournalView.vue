@@ -11,11 +11,16 @@
           <q-icon name="add" />
           Add trade
         </q-btn>
+        <div style="margin-top: 2em;">
+          <ListTrades />
+        </div>
+       
+
           <q-dialog v-model="showErrorModal">
           <ErrorAddingTrade @close="closeErrorModal" @navigate="navigateToAddBrokerAndAsset" />
         </q-dialog>
           <q-dialog v-model="showAddTradeModal">
-          <AddTradeForm  @close="closeAddTradeModal" />
+          <AddTradeForm  @close="closeAddTradeModal" @tradeAdded = "onTradeAdded" />
         </q-dialog>
       </div>
     </div>
@@ -27,6 +32,9 @@
   import ErrorAddingTrade from '../components/trades/ErrorAddingTrade.vue';
   import AddTradeForm from '../components/trades/AddTradeForm.vue';
 import router from '../router';
+import ListTrades from '../components/trades/ListTrades.vue';
+import { useTradeStore } from '../../application/stores/tradeStore';
+import type { TradeResponse } from '../../application/types/TradeResponse';
   
   // Modales
   const showErrorModal = ref(false);
@@ -34,8 +42,12 @@ import router from '../router';
   
   // Store
   const profileStore = useProfileStore();
+  const tradeStore = useTradeStore();
   
-  // Métodos
+  const onTradeAdded = (newTrade: TradeResponse) => {
+    tradeStore.trades.unshift(newTrade); 
+  }
+
   const addTrade = () => {
     if (profileStore.candAddTrade) {
       showAddTradeModal.value = true; 

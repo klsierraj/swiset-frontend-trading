@@ -4,12 +4,16 @@
         <h2>Journal</h2>
       </div>
       <div>
+        <span>Nota para la persona que revise:</span>
+        <br>
+        <span>No logré encontrar el endpoint para agregar un asset a un usuario. Asegurate de tener un usuario con assets agregandolo desde la App de SWISET para poder crear un trade</span>
+        <br>
         <q-btn
           style="background-color: var(--primary-color); color: black;"
           @click="addTrade"
         >
           <q-icon name="add" />
-          Add trade
+          Crear trade
         </q-btn>
         <div style="margin-top: 2em;">
           <ListTrades />

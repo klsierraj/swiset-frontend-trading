@@ -67,10 +67,12 @@ Before you can create a trade, you need to ensure the following:
    - Ensure the details are valid to avoid validation errors.
 
 ## Notes
-
+- The functionality to create a broker has been implemented, but it only allows adding one broker. This is designed to simulate the flow of creating a trade and ensuring the prerequisites for manually adding a trade are met.
 - Assets and brokers are prerequisites for creating trades.
 - While the app is capable of listing and creating brokers, the lack of an endpoint to create assets limits some functionalities.
-- For now, ensure assets are pre-assigned to the user through another system or existing logic.
+- FOR NOW, ENSURE ASSETS ARE PRE-ASSIGNED TO THE USER THROUGH THE SWISET APP
+- Due to time reasons it was not possible to implement the tests :c 
+
 
 ## Troubleshooting
 

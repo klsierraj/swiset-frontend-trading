@@ -49,6 +49,7 @@ router.beforeEach((to, from, next) => {
   const isPublicRoute = !to.meta.requiresAuth;
 
   if (!isAuthenticated && !isPublicRoute) {
+    console.log("Navigating from", from, "to", to);
     return next('/login');
   }
 

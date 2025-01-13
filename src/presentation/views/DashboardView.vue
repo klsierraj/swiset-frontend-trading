@@ -9,7 +9,7 @@
   
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, watch } from 'vue';
 import { useProfileStore } from '../../application/stores/useProfileStore';
 import { storeToRefs } from 'pinia';
@@ -20,17 +20,17 @@ const profileStore = useProfileStore();
 const { userInfo } = storeToRefs(profileStore);
 
 const fetchProfile = async () => {
-  await profileStore.fetchAccountDetails(localStorage.getItem('authToken'));
+  await profileStore.fetchAccountDetails(localStorage.getItem('authToken') ?? '');
 };
 
 const fetchUserAssets = async () => {
   if (userInfo.value?.id) {
-    await profileStore.fetchUserAssets(userInfo.value.id, localStorage.getItem('authToken'));
+    await profileStore.fetchUserAssets(userInfo.value.id, localStorage.getItem('authToken') ?? '');
   }
 };
 
 const fetchUserBrokers = async () => {
-    await profileStore.fetchUserBrokers(localStorage.getItem('authToken'));
+    await profileStore.fetchUserBrokers(localStorage.getItem('authToken') ?? '');
 
 };
 

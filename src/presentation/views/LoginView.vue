@@ -53,6 +53,8 @@ const password = ref('');
 const authStore = useAuthStore();
 const { login, isProcessing, errorMessage } = authStore;
 
+
+
 const isFormValid = computed(() => username.value.trim() && password.value.trim());
 
 const handleLogin = async () => {
@@ -64,7 +66,7 @@ const handleLogin = async () => {
 };
 
 const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === 'Enter' && isFormValid.value && !isProcessing.value) {
+  if (event.key === 'Enter' && isFormValid.value && !isProcessing) {
     handleLogin();
   }
 };

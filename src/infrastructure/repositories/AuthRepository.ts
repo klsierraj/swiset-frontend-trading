@@ -9,6 +9,7 @@ export class AuthRepository implements IAuthRepository {
       const response = await axios.post(`${this.API_BASE_URL}/authenticate`, {
         username,
         password,
+    
       });
       if (response.data.id_token) {
         return { token: response.data.id_token };

@@ -62,7 +62,6 @@ const isLoading = ref(false);
 const showTradeDetailModal = ref(false); 
 const selectedTrade = ref(); 
 
-// Abrir modal con detalles del trade
 const openTradeDetail = (trade: any) => {
 tradeStore.selectedTrade = trade;
 showTradeDetailModal.value = true;
@@ -115,7 +114,16 @@ onMounted(() => {
   }
 });
 
-const columns = [
+const columns: {
+  name: string;
+  label: string;
+  field: string | ((row: any) => any);
+  required?: boolean;
+  align?: "right" | "left" | "center";
+  sortable?: boolean;
+  sort?: (a: any, b: any, rowA: any, rowB: any) => number;
+  headerClasses?: string;
+}[] = [
   { name: "side", label: "Side", field: "side", align: "left", sortable: true },
   { name: "mood", label: "Mood", field: "mood", align: "left", sortable: true },
   { name: "openTime", label: "Open Time", field: "openTime", align: "left", sortable: true },

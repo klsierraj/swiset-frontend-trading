@@ -28,8 +28,7 @@
     </div>
   </template>
   
-  <script setup>
-  import { computed } from 'vue';
+  <script setup lang="ts">
   import { useAuthStore } from '../../application/stores/authStore';
 import { useProfileStore } from '../../application/stores/useProfileStore';
   

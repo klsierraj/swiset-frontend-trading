@@ -274,7 +274,7 @@ const submitTrade = async () => {
 
     const trade = new Trade(
       side.value.value, 
-      sentiment.value.value , 
+      sentiment.value?.value as string, 
       formattedOpenTime,
       formattedCloseTime,
       parseFloat(entryPrice.value),
